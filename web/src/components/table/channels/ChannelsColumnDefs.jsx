@@ -27,7 +27,6 @@ import {
   SplitButtonGroup,
   Tag,
   Tooltip,
-  Typography,
 } from '@douyinfe/semi-ui';
 import {
   timestamp2string,
@@ -48,7 +47,7 @@ const renderType = (type, channelInfo = undefined, t) => {
   for (let i = 0; i < CHANNEL_OPTIONS.length; i++) {
     type2label[CHANNEL_OPTIONS[i].value] = CHANNEL_OPTIONS[i];
   }
-  type2label[0] = { value: 0, label: t('未知类型'), color: 'grey' };
+  type2label[0] = { value: 0, label: t('type.unknown'), color: 'grey' };
 
   let icon = getChannelIcon(type);
 
@@ -77,7 +76,7 @@ const renderType = (type, channelInfo = undefined, t) => {
 const renderTagType = (t) => {
   return (
     <Tag color='light-blue' shape='circle' type='light'>
-      {t('标签聚合')}
+      {t('type.tagAggregation')}
     </Tag>
   );
 };
@@ -98,25 +97,25 @@ const renderStatus = (status, channelInfo = undefined, t) => {
     case 1:
       return (
         <Tag color='green' shape='circle'>
-          {t('已启用')}
+          {t('status.enabled')}
         </Tag>
       );
     case 2:
       return (
         <Tag color='red' shape='circle'>
-          {t('已禁用')}
+          {t('status.disabled')}
         </Tag>
       );
     case 3:
       return (
         <Tag color='yellow' shape='circle'>
-          {t('自动禁用')}
+          {t('status.autoDisabled')}
         </Tag>
       );
     default:
       return (
         <Tag color='grey' shape='circle'>
-          {t('未知状态')}
+          {t('status.unknown')}
         </Tag>
       );
   }
@@ -127,25 +126,25 @@ const renderMultiKeyStatus = (status, keySize, enabledKeySize, t) => {
     case 1:
       return (
         <Tag color='green' shape='circle'>
-          {t('已启用')} {enabledKeySize}/{keySize}
+          {t('status.enabled')} {enabledKeySize}/{keySize}
         </Tag>
       );
     case 2:
       return (
         <Tag color='red' shape='circle'>
-          {t('已禁用')} {enabledKeySize}/{keySize}
+          {t('status.disabled')} {enabledKeySize}/{keySize}
         </Tag>
       );
     case 3:
       return (
         <Tag color='yellow' shape='circle'>
-          {t('自动禁用')} {enabledKeySize}/{keySize}
+          {t('status.autoDisabled')} {enabledKeySize}/{keySize}
         </Tag>
       );
     default:
       return (
         <Tag color='grey' shape='circle'>
-          {t('未知状态')} {enabledKeySize}/{keySize}
+          {t('status.unknown')} {enabledKeySize}/{keySize}
         </Tag>
       );
   }
@@ -153,11 +152,11 @@ const renderMultiKeyStatus = (status, keySize, enabledKeySize, t) => {
 
 const renderResponseTime = (responseTime, t) => {
   let time = responseTime / 1000;
-  time = time.toFixed(2) + t(' 秒');
+  time = time.toFixed(2) + t('common.seconds');
   if (responseTime === 0) {
     return (
       <Tag color='grey' shape='circle'>
-        {t('未测试')}
+        {t('test.untested')}
       </Tag>
     );
   } else if (responseTime <= 1000) {
@@ -211,12 +210,12 @@ export const getChannelsColumns = ({
   return [
     {
       key: COLUMN_KEYS.ID,
-      title: t('ID'),
+      title: t('common.id'),
       dataIndex: 'id',
     },
     {
       key: COLUMN_KEYS.NAME,
-      title: t('名称'),
+      title: t('common.name'),
       dataIndex: 'name',
       render: (text, record, index) => {
         if (record.remark && record.remark.trim() !== '') {
@@ -234,14 +233,14 @@ export const getChannelsColumns = ({
                       navigator.clipboard
                         .writeText(record.remark)
                         .then(() => {
-                          showSuccess(t('复制成功'));
+                          showSuccess(t('common.copySuccess'));
                         })
                         .catch(() => {
-                          showError(t('复制失败'));
+                          showError(t('common.copyFail'));
                         });
                     }}
                   >
-                    {t('复制')}
+                    {t('common.copy')}
                   </Button>
                 </div>
               }
@@ -257,7 +256,7 @@ export const getChannelsColumns = ({
     },
     {
       key: COLUMN_KEYS.GROUP,
-      title: t('分组'),
+      title: t('common.group'),
       dataIndex: 'group',
       render: (text, record, index) => (
         <div>
@@ -276,7 +275,7 @@ export const getChannelsColumns = ({
     },
     {
       key: COLUMN_KEYS.TYPE,
-      title: t('类型'),
+      title: t('common.type'),
       dataIndex: 'type',
       render: (text, record, index) => {
         if (record.children === undefined) {
@@ -293,7 +292,7 @@ export const getChannelsColumns = ({
     },
     {
       key: COLUMN_KEYS.STATUS,
-      title: t('状态'),
+      title: t('common.status'),
       dataIndex: 'status',
       render: (text, record, index) => {
         if (text === 3) {
@@ -307,7 +306,10 @@ export const getChannelsColumns = ({
             <div>
               <Tooltip
                 content={
-                  t('原因：') + reason + t('，时间：') + timestamp2string(time)
+                  t('common.reason') +
+                  reason +
+                  t('common.time') +
+                  timestamp2string(time)
                 }
               >
                 {renderStatus(text, record.channel_info, t)}
@@ -321,26 +323,30 @@ export const getChannelsColumns = ({
     },
     {
       key: COLUMN_KEYS.RESPONSE_TIME,
-      title: t('响应时间'),
+      title: t('common.responseTime'),
       dataIndex: 'response_time',
       render: (text, record, index) => <div>{renderResponseTime(text, t)}</div>,
     },
     {
       key: COLUMN_KEYS.BALANCE,
-      title: t('已用/剩余'),
+      title: t('common.usedAndRemaining'),
       dataIndex: 'expired_time',
       render: (text, record, index) => {
         if (record.children === undefined) {
           return (
             <div>
               <Space spacing={1}>
-                <Tooltip content={t('已用额度')}>
+                <Tooltip content={t('quota.used')}>
                   <Tag color='white' type='ghost' shape='circle'>
                     {renderQuota(record.used_quota)}
                   </Tag>
                 </Tooltip>
                 <Tooltip
-                  content={t('剩余额度$') + record.balance + t('，点击更新')}
+                  content={
+                    t('quota.remainingWithDollar') +
+                    record.balance +
+                    t('quota.clickToUpdate')
+                  }
                 >
                   <Tag
                     color='white'
@@ -356,7 +362,7 @@ export const getChannelsColumns = ({
           );
         } else {
           return (
-            <Tooltip content={t('已用额度')}>
+            <Tooltip content={t('quota.used')}>
               <Tag color='white' type='ghost' shape='circle'>
                 {renderQuota(record.used_quota)}
               </Tag>
@@ -367,7 +373,7 @@ export const getChannelsColumns = ({
     },
     {
       key: COLUMN_KEYS.PRIORITY,
-      title: t('优先级'),
+      title: t('common.priority'),
       dataIndex: 'priority',
       render: (text, record, index) => {
         if (record.children === undefined) {
@@ -395,11 +401,10 @@ export const getChannelsColumns = ({
               keepFocus={true}
               onBlur={(e) => {
                 Modal.warning({
-                  title: t('修改子渠道优先级'),
-                  content:
-                    t('确定要修改所有子渠道优先级为 ') +
-                    e.target.value +
-                    t(' 吗？'),
+                  title: t('channel.changeSubChannelPriority'),
+                  content: t('channel.confirmChangePriority', {
+                    value: e.target.value,
+                  }),
                   onOk: () => {
                     if (e.target.value === '') {
                       return;
@@ -422,7 +427,7 @@ export const getChannelsColumns = ({
     },
     {
       key: COLUMN_KEYS.WEIGHT,
-      title: t('权重'),
+      title: t('common.weight'),
       dataIndex: 'weight',
       render: (text, record, index) => {
         if (record.children === undefined) {
@@ -450,11 +455,10 @@ export const getChannelsColumns = ({
               keepFocus={true}
               onBlur={(e) => {
                 Modal.warning({
-                  title: t('修改子渠道权重'),
-                  content:
-                    t('确定要修改所有子渠道权重为 ') +
-                    e.target.value +
-                    t(' 吗？'),
+                  title: t('channel.changeSubChannelWeight'),
+                  content: t('channel.confirmChangeWeight', {
+                    value: e.target.value,
+                  }),
                   onOk: () => {
                     if (e.target.value === '') {
                       return;
@@ -485,12 +489,12 @@ export const getChannelsColumns = ({
           const moreMenuItems = [
             {
               node: 'item',
-              name: t('删除'),
+              name: t('common.delete'),
               type: 'danger',
               onClick: () => {
                 Modal.confirm({
-                  title: t('确定是否要删除此渠道？'),
-                  content: t('此修改将不可逆'),
+                  title: t('common.confirmDelete'),
+                  content: t('common.irreversible'),
                   onOk: () => {
                     (async () => {
                       await manageChannel(record.id, 'delete', record);
@@ -507,12 +511,12 @@ export const getChannelsColumns = ({
             },
             {
               node: 'item',
-              name: t('复制'),
+              name: t('common.copy'),
               type: 'tertiary',
               onClick: () => {
                 Modal.confirm({
-                  title: t('确定是否要复制此渠道？'),
-                  content: t('复制渠道的所有信息'),
+                  title: t('common.confirmCopy'),
+                  content: t('common.copyAllInfo'),
                   onOk: () => copySelectedChannel(record),
                 });
               },
@@ -523,14 +527,14 @@ export const getChannelsColumns = ({
             <Space wrap>
               <SplitButtonGroup
                 className='overflow-hidden'
-                aria-label={t('测试单个渠道操作项目组')}
+                aria-label={t('test.testChannelGroup')}
               >
                 <Button
                   size='small'
                   type='tertiary'
                   onClick={() => testChannel(record, '')}
                 >
-                  {t('测试')}
+                  {t('common.test')}
                 </Button>
                 <Button
                   size='small'
@@ -549,19 +553,19 @@ export const getChannelsColumns = ({
                   size='small'
                   onClick={() => manageChannel(record.id, 'disable', record)}
                 >
-                  {t('禁用')}
+                  {t('common.disable')}
                 </Button>
               ) : (
                 <Button
                   size='small'
                   onClick={() => manageChannel(record.id, 'enable', record)}
                 >
-                  {t('启用')}
+                  {t('common.enable')}
                 </Button>
               )}
 
               {record.channel_info?.is_multi_key ? (
-                <SplitButtonGroup aria-label={t('多密钥渠道操作项目组')}>
+                <SplitButtonGroup aria-label={t('channel.multiKeyChannelGroup')}>
                   <Button
                     type='tertiary'
                     size='small'
@@ -570,7 +574,7 @@ export const getChannelsColumns = ({
                       setShowEdit(true);
                     }}
                   >
-                    {t('编辑')}
+                    {t('common.edit')}
                   </Button>
                   <Dropdown
                     trigger='click'
@@ -578,7 +582,7 @@ export const getChannelsColumns = ({
                     menu={[
                       {
                         node: 'item',
-                        name: t('多密钥管理'),
+                        name: t('channel.manageMultiKey'),
                         onClick: () => {
                           setCurrentMultiKeyChannel(record);
                           setShowMultiKeyManageModal(true);
@@ -602,7 +606,7 @@ export const getChannelsColumns = ({
                     setShowEdit(true);
                   }}
                 >
-                  {t('编辑')}
+                  {t('common.edit')}
                 </Button>
               )}
 
@@ -624,14 +628,14 @@ export const getChannelsColumns = ({
                 size='small'
                 onClick={() => manageTag(record.key, 'enable')}
               >
-                {t('启用全部')}
+                {t('common.enableAll')}
               </Button>
               <Button
                 type='tertiary'
                 size='small'
                 onClick={() => manageTag(record.key, 'disable')}
               >
-                {t('禁用全部')}
+                {t('common.disableAll')}
               </Button>
               <Button
                 type='tertiary'
@@ -641,7 +645,7 @@ export const getChannelsColumns = ({
                   setEditingTag(record.key);
                 }}
               >
-                {t('编辑')}
+                {t('common.edit')}
               </Button>
             </Space>
           );
