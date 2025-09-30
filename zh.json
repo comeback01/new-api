@@ -1,0 +1,57 @@
+{
+  "type": {
+    "unknown": "未知类型",
+    "tagAggregation": "标签聚合"
+  },
+  "status": {
+    "enabled": "已启用",
+    "disabled": "已禁用",
+    "autoDisabled": "自动禁用",
+    "unknown": "未知状态"
+  },
+  "common": {
+    "seconds": " 秒",
+    "id": "ID",
+    "name": "名称",
+    "copySuccess": "复制成功",
+    "copyFail": "复制失败",
+    "copy": "复制",
+    "group": "分组",
+    "type": "类型",
+    "status": "状态",
+    "reason": "原因：",
+    "time": "，时间：",
+    "responseTime": "响应时间",
+    "usedAndRemaining": "已用/剩余",
+    "priority": "优先级",
+    "weight": "权重",
+    "delete": "删除",
+    "confirmDelete": "确定是否要删除此渠道？",
+    "irreversible": "此修改将不可逆",
+    "confirmCopy": "确定是否要复制此渠道？",
+    "copyAllInfo": "复制渠道的所有信息",
+    "test": "测试",
+    "disable": "禁用",
+    "enable": "启用",
+    "edit": "编辑",
+    "enableAll": "启用全部",
+    "disableAll": "禁用全部"
+  },
+  "test": {
+    "untested": "未测试",
+    "testChannelGroup": "测试单个渠道操作项目组"
+  },
+  "quota": {
+    "used": "已用额度",
+    "remainingWithDollar": "剩余额度$",
+    "clickToUpdate": "，点击更新"
+  },
+  "channel": {
+    "changeSubChannelPriority": "修改子渠道优先级",
+    "confirmChangePriority": "确定要修改所有子渠道优先级为 {{value}} 吗？",
+    "changeSubChannelWeight": "修改子渠道权重",
+    "confirmChangeWeight": "确定要修改所有子渠道权重为 {{value}} 吗？",
+    "multiKeyChannelGroup": "多密钥渠道操作项目组",
+    "manageMultiKey": "多密钥管理"
+  }
+}
