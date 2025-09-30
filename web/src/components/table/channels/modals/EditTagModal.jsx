@@ -167,7 +167,7 @@ const EditTagModal = (props) => {
     let data = { tag };
     if (formVals.model_mapping) {
       if (!verifyJSON(formVals.model_mapping)) {
-        showInfo('模型映射必须是合法的 JSON 格式！');
+        showInfo(t('modals.editTag.errors.invalidJson'));
         setLoading(false);
         return;
       }
@@ -186,7 +186,7 @@ const EditTagModal = (props) => {
       data.models === undefined &&
       data.new_tag === undefined
     ) {
-      showWarning('没有任何修改！');
+      showWarning(t('modals.editTag.warnings.noChanges'));
       setLoading(false);
       return;
     }
@@ -198,7 +198,7 @@ const EditTagModal = (props) => {
     try {
       const res = await API.put('/api/channel/tag', data);
       if (res?.data?.success) {
-        showSuccess('标签更新成功！');
+        showSuccess(t('modals.editTag.success.update'));
         refresh();
         handleClose();
       }
@@ -373,7 +373,7 @@ const EditTagModal = (props) => {
                   <Form.Input
                     field='new_tag'
                     label={t('标签名称')}
-                    placeholder={t('请输入新标签，留空则解散标签')}
+                    placeholder={t('modals.editTag.form.newTag.placeholder')}
                     onChange={(value) => handleInputChange('new_tag', value)}
                   />
                 </div>
@@ -408,7 +408,7 @@ const EditTagModal = (props) => {
                   <Form.Select
                     field='models'
                     label={t('模型')}
-                    placeholder={t('请选择该渠道所支持的模型，留空则不更改')}
+                    placeholder={t('modals.editTag.form.models.placeholder')}
                     multiple
                     filter={selectFilter}
                     autoClearSearchValue={false}
@@ -421,7 +421,7 @@ const EditTagModal = (props) => {
                   <Form.Input
                     field='custom_model'
                     label={t('自定义模型名称')}
-                    placeholder={t('输入自定义模型名称')}
+                    placeholder={t('modals.editTag.form.customModel.placeholder')}
                     onChange={(value) => setCustomModel(value.trim())}
                     suffix={
                       <Button
@@ -437,9 +437,7 @@ const EditTagModal = (props) => {
                   <Form.TextArea
                     field='model_mapping'
                     label={t('模型重定向')}
-                    placeholder={t(
-                      '此项可选，用于修改请求体中的模型名称，为一个 JSON 字符串，键为请求中模型名称，值为要替换的模型名称，留空则不更改',
-                    )}
+                    placeholder={t('modals.editTag.form.modelMapping.placeholder')}
                     autosize
                     onChange={(value) =>
                       handleInputChange('model_mapping', value)
@@ -498,7 +496,7 @@ const EditTagModal = (props) => {
                   <Form.Select
                     field='groups'
                     label={t('分组')}
-                    placeholder={t('请选择可以使用该渠道的分组，留空则不更改')}
+                    placeholder={t('modals.editTag.form.groups.placeholder')}
                     multiple
                     allowAdditions
                     additionLabel={t(
