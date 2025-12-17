@@ -23,11 +23,11 @@
 
 #### Corrections manuelles requises
 
-| Package | Version actuelle → Recommandée | Vulnérabilité     | Priorité    |
-| ------- | ------------------------------ | ----------------- | ----------- |
-| minimist | ~1.2.5 → ~1.2.8 | Prototype Pollution | 🔴 Critique |
-| glob | ~10.4.5 → ~10.5.0 | Command injection | 🔴 Haute |
-| vite | ~5.4.11 → ~7.3.0 | Multiples vulnérabilités | 🔴 Haute |
+| Package  | Version actuelle → Recommandée | Vulnérabilité            | Priorité    |
+| -------- | ------------------------------ | ------------------------ | ----------- |
+| minimist | ~1.2.5 → ~1.2.8                | Prototype Pollution      | 🔴 Critique |
+| glob     | ~10.4.5 → ~10.5.0              | Command injection        | 🔴 Haute    |
+| vite     | ~5.4.11 → ~7.3.0               | Multiples vulnérabilités | 🔴 Haute    |
 
 **Statut :** ⚠️ Certaines vulnérabilités restantes (en attente de mises à jour des dépendances tierces)
 
@@ -171,10 +171,10 @@ Aucun package n'a échoué dans la mise à jour finale. La mise à jour de Vite 
 
 ### Packages non utilisés (validation requise)
 
-| Package | Raison   | Recommandation               |
-| ------- | -------- | ---------------------------- |
-| @visactor/vchart   | Non importé dans le code | ⚠️ Valider avant suppression |
-| react-dropzone | Non importé dans le code | ⚠️ Valider avant suppression |
+| Package          | Raison                   | Recommandation               |
+| ---------------- | ------------------------ | ---------------------------- |
+| @visactor/vchart | Non importé dans le code | ⚠️ Valider avant suppression |
+| react-dropzone   | Non importé dans le code | ⚠️ Valider avant suppression |
 
 ### État final
 
@@ -215,3 +215,108 @@ Aucun package n'a échoué dans la mise à jour finale. La mise à jour de Vite 
 # Puis réinstaller
 bun install
 ```
+
+---
+
+## ❌ Tentative de Migration React 19 - ÉCHEC
+
+**Date:** 17 décembre 2025
+
+### Erreur rencontrée
+
+```
+TypeError: gs.findDOMNode is not a function
+TypeError: xs.findDOMNode is not a function
+```
+
+**Composant affecté en premier:** LanguageSelector (sélecteur de langue)
+
+### Cause racine
+
+- **React 19 a complètement supprimé l'API `ReactDOM.findDOMNode()`** (dépréciée depuis React 16)
+- **@douyinfe/semi-ui v2.89.0** utilise encore cette API en interne dans son système de Trigger
+- Cette API était utilisée pour obtenir les nœuds DOM des composants afin de positionner les overlays
+
+### Composants Semi UI affectés
+
+- ❌ `Dropdown` (incluant le sélecteur de langue)
+- ❌ `Tooltip` / `Popover`
+- ❌ `Select`
+- ❌ Tous les composants utilisant le système `Trigger` interne
+
+### Packages testés pendant la migration
+
+**Phase 1: React 19 + TypeScript 5**
+
+- `react`: 18.3.1 → 19.2.3 ❌
+- `react-dom`: 18.3.1 → 19.2.3 ❌
+- `typescript`: 4.9.5 → 5.9.3 ✅ (compatible mais inutile sans React 19)
+- `@types/react`: Mis à jour
+- `@types/react-dom`: Mis à jour
+
+**Tentative de correction i18next:**
+
+- `i18next`: 23.16.8 → 25.7.3 ✅ (build OK)
+- `react-i18next`: 13.5.0 → 16.5.0 ✅ (build OK)
+- `i18next-browser-languagedetector`: 7.2.2 → 8.2.0 ✅ (build OK)
+
+**Résultat:** Le build réussit mais l'application plante au runtime sur les composants Semi UI.
+
+### Alternatives évaluées
+
+1. **Attendre une mise à jour de Semi UI**
+   - Aucune version React 19 compatible annoncée
+   - Le repo GitHub ne mentionne pas de migration prévue
+   - Status: ⏳ En attente
+
+2. **Migrer vers une autre UI library**
+   - Ant Design 5.x (compatible React 19)
+   - Material-UI (MUI) v6 (compatible React 19)
+   - Chakra UI v3 (compatible React 19)
+   - Mantine v8 (compatible React 19)
+   - Impact: 🔴 Très lourd - refonte complète de l'UI
+
+### Recommandations
+
+#### Court terme (maintenant)
+
+- ✅ **Rester sur React 18.3.1** (stable, maintenu, LTS)
+- ✅ Effectuer les mises à jour MINOR sûres (TypeScript 5.9.3, autres packages)
+- ✅ Continuer à suivre les mises à jour de Semi UI
+
+#### Moyen terme (6 mois)
+
+- 📋 Surveiller les releases de @douyinfe/semi-ui pour support React 19
+- 📋 Tester React 19 en environnement de dev dès qu'une version compatible sort
+- 📋 Considérer TypeScript 5.x si nécessaire pour d'autres dépendances
+
+#### Long terme (1 an+)
+
+- 🔍 Évaluer si React 19 devient critique pour d'autres dépendances
+- 🔍 Si Semi UI ne migre pas: envisager migration UI library
+- 🔍 Planifier une POC avec Ant Design ou MUI si nécessaire
+
+### Leçons apprises
+
+1. ⚠️ Les `peerDependencies` peuvent être trompeurs (Semi UI annonce `>=16.0.0` mais le code n'est pas compatible)
+2. ✅ L'approche incrémentale (React 19 d'abord, puis autres MAJOR) était la bonne
+3. ✅ Le backup via `web.rar` a permis un rollback rapide
+4. 📝 Les breaking changes de React 19 sont significatifs pour les librairies UI legacy
+
+### Actions effectuées
+
+- [x] Tentative de migration React 19
+- [x] Identification de l'erreur findDOMNode
+- [x] Test de correction via mise à jour i18next
+- [x] Rollback complet via restauration backup
+- [x] Documentation de l'échec
+- [x] Création branche `feat/dependency-updates-dec2025`
+
+### État actuel
+
+- **Branche**: `feat/dependency-updates-dec2025`
+- **React**: 18.3.1 (stable)
+- **TypeScript**: 4.9.5 (à mettre à jour vers 5.9.3 indépendamment)
+- **Semi UI**: 2.89.0 (bloquant pour React 19)
+- **Build**: ✅ Fonctionnel
+- **Runtime**: ✅ Tous composants opérationnels

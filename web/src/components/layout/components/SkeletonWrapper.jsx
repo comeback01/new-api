@@ -247,9 +247,7 @@ const SkeletonWrapper = ({
           margin: '3px 8px',
         }}
       >
-        <div className='sidebar-icon-container shrink-0'>
-          {renderIcon()}
-        </div>
+        <div className='sidebar-icon-container shrink-0'>{renderIcon()}</div>
         {renderLabel(labelWidth)}
       </div>
     );
