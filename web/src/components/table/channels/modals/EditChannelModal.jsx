@@ -1476,7 +1476,7 @@ const EditChannelModal = (props) => {
     // 构建样式类名
     const optionClassName = [
       'flex items-center gap-3 px-3 py-2 transition-all duration-200 rounded-lg mx-2 my-1',
-      focused && 'bg-blue-50 shadow-sm',
+      focused && 'bg-blue-50 shadow-xs',
       selected &&
         'bg-blue-100 text-blue-700 shadow-lg ring-2 ring-blue-200 ring-opacity-50',
       disabled && 'opacity-50 cursor-not-allowed',
@@ -1494,7 +1494,7 @@ const EditChannelModal = (props) => {
         onMouseEnter={(e) => onMouseEnter()}
       >
         <div className='flex items-center gap-3 w-full'>
-          <div className='flex-shrink-0 w-5 h-5 flex items-center justify-center'>
+          <div className='shrink-0 w-5 h-5 flex items-center justify-center'>
             {getChannelIcon(value)}
           </div>
           <div className='flex-1 min-w-0'>
@@ -1505,7 +1505,7 @@ const EditChannelModal = (props) => {
             />
           </div>
           {selected && (
-            <div className='flex-shrink-0 text-blue-600'>
+            <div className='shrink-0 text-blue-600'>
               <svg
                 width='16'
                 height='16'
@@ -1606,7 +1606,7 @@ const EditChannelModal = (props) => {
             <Spin spinning={loading}>
               <div className='p-2' ref={formContainerRef}>
                 <div ref={(el) => (formSectionRefs.current.basicInfo = el)}>
-                  <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                  <Card className='rounded-2xl! shadow-xs border-0 mb-6'>
                     {/* Header: Basic Info */}
                     <div className='flex items-center mb-2'>
                       <Avatar
@@ -1866,7 +1866,7 @@ const EditChannelModal = (props) => {
                                 description={t(
                                   '批量创建模式下仅支持文件上传，不支持手动输入',
                                 )}
-                                className='!rounded-lg mb-3'
+                                className='rounded-lg! mb-3'
                               />
                             )}
 
@@ -2053,7 +2053,7 @@ const EditChannelModal = (props) => {
                             description={t(
                               '轮询模式必须搭配Redis和内存缓存功能使用，否则性能将大幅降低，并且无法实现轮询功能',
                             )}
-                            className='!rounded-lg mt-2'
+                            className='rounded-lg! mt-2'
                           />
                         )}
                       </>
@@ -2142,7 +2142,7 @@ const EditChannelModal = (props) => {
                 {/* API Configuration Card */}
                 {showApiConfigCard && (
                   <div ref={(el) => (formSectionRefs.current.apiConfig = el)}>
-                    <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                    <Card className='rounded-2xl! shadow-xs border-0 mb-6'>
                       {/* Header: API Config */}
                       <div
                         className='flex items-center mb-2'
@@ -2185,7 +2185,7 @@ const EditChannelModal = (props) => {
                               </Text>
                             </div>
                           }
-                          className='!rounded-lg'
+                          className='rounded-lg!'
                         />
                       )}
 
@@ -2196,7 +2196,7 @@ const EditChannelModal = (props) => {
                             description={t(
                               '2025年5月10日后添加的渠道，不需要再在部署的时候移除模型名称中的"."',
                             )}
-                            className='!rounded-lg'
+                            className='rounded-lg!'
                           />
                           <div>
                             <Form.Input
@@ -2250,7 +2250,7 @@ const EditChannelModal = (props) => {
                             description={t(
                               '如果你对接的是上游One API或者New API等转发项目，请使用OpenAI类型，不要使用此类型，除非你知道你在做什么。',
                             )}
-                            className='!rounded-lg'
+                            className='rounded-lg!'
                           />
                           <div>
                             <Form.Input
@@ -2274,7 +2274,7 @@ const EditChannelModal = (props) => {
                           description={t(
                             'Dify渠道只适配chatflow和agent，并且agent不支持图片！',
                           )}
-                          className='!rounded-lg'
+                          className='rounded-lg!'
                         />
                       )}
 
@@ -2370,7 +2370,7 @@ const EditChannelModal = (props) => {
 
                 {/* Model Configuration Card */}
                 <div ref={(el) => (formSectionRefs.current.modelConfig = el)}>
-                  <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                  <Card className='rounded-2xl! shadow-xs border-0 mb-6'>
                     {/* Header: Model Config */}
                     <div className='flex items-center mb-2'>
                       <Avatar
@@ -2581,7 +2581,7 @@ const EditChannelModal = (props) => {
                 <div
                   ref={(el) => (formSectionRefs.current.advancedSettings = el)}
                 >
-                  <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                  <Card className='rounded-2xl! shadow-xs border-0 mb-6'>
                     {/* Header: Advanced Settings */}
                     <div className='flex items-center mb-2'>
                       <Avatar
@@ -2691,7 +2691,7 @@ const EditChannelModal = (props) => {
                       extraText={
                         <div className='flex gap-2 flex-wrap'>
                           <Text
-                            className='!text-semi-color-primary cursor-pointer'
+                            className='text-semi-color-primary! cursor-pointer'
                             onClick={() =>
                               handleInputChange(
                                 'param_override',
@@ -2702,7 +2702,7 @@ const EditChannelModal = (props) => {
                             {t('旧格式模板')}
                           </Text>
                           <Text
-                            className='!text-semi-color-primary cursor-pointer'
+                            className='text-semi-color-primary! cursor-pointer'
                             onClick={() =>
                               handleInputChange(
                                 'param_override',
@@ -2754,7 +2754,7 @@ const EditChannelModal = (props) => {
                         <div className='flex flex-col gap-1'>
                           <div className='flex gap-2 flex-wrap items-center'>
                             <Text
-                              className='!text-semi-color-primary cursor-pointer'
+                              className='text-semi-color-primary! cursor-pointer'
                               onClick={() =>
                                 handleInputChange(
                                   'header_override',
@@ -2902,7 +2902,7 @@ const EditChannelModal = (props) => {
                     (formSectionRefs.current.channelExtraSettings = el)
                   }
                 >
-                  <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                  <Card className='rounded-2xl! shadow-xs border-0 mb-6'>
                     {/* Header: Channel Extra Settings */}
                     <div className='flex items-center mb-2'>
                       <Avatar
