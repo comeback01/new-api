@@ -34,3 +34,12 @@ a { color: inherit; text-decoration: none; }
 .auth-form label{display:grid;gap:6px}
 .auth-form input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#fff}
 .error-box{padding:10px 12px;border-radius:10px;background:rgba(127,29,29,.45);border:1px solid rgba(248,113,113,.35);color:#fecaca}
+
+.page-header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:24px}
+.stat-card{padding:18px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
+.stat-label{margin:0 0 8px;color:#94a3b8;font-size:14px}
+.stat-value{margin:0;font-size:28px}
+.stat-help{margin:8px 0 0;color:#94a3b8;font-size:13px}
+.panel-block{margin-top:24px;padding:20px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+@media (max-width: 900px){.stats-grid{grid-template-columns:1fr}}
