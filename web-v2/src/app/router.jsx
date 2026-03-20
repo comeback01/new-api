@@ -6,16 +6,21 @@ import { TokensPage } from "../pages/app/tokens-page";
 import { LogsPage } from "../pages/app/logs-page";
 import { PlaygroundPage } from "../pages/app/playground-page";
 import { AppShell } from "./layout/app-shell";
+import { ProtectedRoute } from "../components/common/protected-route";
+
+function ProtectedApp({ children }) {
+  return <ProtectedRoute><AppShell>{children}</AppShell></ProtectedRoute>;
+}
 
 export function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/app" element={<AppShell><DashboardPage /></AppShell>} />
-      <Route path="/app/tokens" element={<AppShell><TokensPage /></AppShell>} />
-      <Route path="/app/logs" element={<AppShell><LogsPage /></AppShell>} />
-      <Route path="/app/playground" element={<AppShell><PlaygroundPage /></AppShell>} />
+      <Route path="/app" element={<ProtectedApp><DashboardPage /></ProtectedApp>} />
+      <Route path="/app/tokens" element={<ProtectedApp><TokensPage /></ProtectedApp>} />
+      <Route path="/app/logs" element={<ProtectedApp><LogsPage /></ProtectedApp>} />
+      <Route path="/app/playground" element={<ProtectedApp><PlaygroundPage /></ProtectedApp>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

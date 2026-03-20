@@ -29,3 +29,8 @@ a { color: inherit; text-decoration: none; }
   .app-shell { grid-template-columns: 1fr; }
   .app-sidebar-wrap { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
 }
+.auth-card{max-width:480px}
+.auth-form{display:grid;gap:16px;margin-top:20px}
+.auth-form label{display:grid;gap:6px}
+.auth-form input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#fff}
+.error-box{padding:10px 12px;border-radius:10px;background:rgba(127,29,29,.45);border:1px solid rgba(248,113,113,.35);color:#fecaca}
